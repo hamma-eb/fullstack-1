@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            margin: 0 auto;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <a href="./juegoCartas.html"></a>
+    <table border="1">
+        <tr>
+            <td value="10"><img src="./images/g1.jpeg" alt=""></td>
+            <td> <img src="./images/g2.jpeg" alt=""></td>
+            <td> <img src="./images/g3.jpeg" alt=""></td>
+            <td> <img src="./images/g4.jpeg" alt=""></td>
+        </tr>
+        <tr>
+            <td> <img src="./images/g1.jpeg" alt=""></td>
+            <td><img src="./images/g2.jpeg" alt=""></td>
+            <td> <img src="./images/g3.jpeg" alt=""></td>
+            <td> <img src="./images/g4.jpeg" alt=""></td>
+        </tr>
+    </table>
+    <script>
+        let moghayese = [];
+        let loquehasecho = 0;
+        function Crear() {
+            let images = document.querySelectorAll("img");
+            let test = [];
+            images.forEach(element => {
+
+                let durum = false;
+                while (durum == false) {
+                    let numerorandom = Math.floor(Math.random() * 4) + 1;
+                    let t = 0;
+                    test.forEach(e => {
+                        if (e == numerorandom) {
+                            t++;
+                        }
+                    })
+                    if (t < 2) {
+                        durum = true;
+                        test.push(numerorandom);
+                        element.src = `${location.origin}/public/javascript/images/g${numerorandom}.png`;
+                    }
+                }
+            });
+
+            let timer = setInterval(timer_, 4000);
+            function timer_() {
+                images.forEach(e => {
+
+                    e.style.filter = "blur(200px)";
+
+                })
+                clearInterval(timer);
+            }
+            images.forEach(e => {
+                e.addEventListener("click", (e) => {
+                    e.path[0].style.filter = "blur(0)";
+                    moghayese.push(e.path[0].src);
+                    let timer = setTimeout(timer_, 1000);
+                    function timer_() {
+                        if (moghayese.length > 1) {
+                            if (moghayese[0] == moghayese[1]) {
+                                loquehasecho++;
+                                if (loquehasecho >= 4) {
+                                    alert("perfecto")
+                                    document.querySelector("a").click();
+                                }
+                                moghayese = [];
+                            } else {
+                                images.forEach(e => {
+                                    e.style.filter = "blur(200px)";
+
+                                })
+                                moghayese = [];
+
+                                document.querySelector("a").click();
+                            }
+                        }
+                    }
+
+                    console.log(e.path[0].src);
+                })
+            })
+
+
+        }
+        Crear();
+
+
+    </script>
+</body>
+
+</html>
